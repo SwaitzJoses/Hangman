@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+var programming_languages = [
+	"python",
+	"javascript",
+	"mongodb",
+	"json",
+	"java",
+	"html",
+	"css",
+	"c",
+	"csharp",
+	"golang",
+	"kotlin",
+	"php",
+	"sql",
+	"ruby"
+]
+
+let answer = '';
+let maxWrong = 6;
+let mistakes = 0;
+let guessed = [];
+let wordStatus = null;
+
+function randomWord() {
+  answer = programming_languages[Math.floor(Math.random() * programming_languages.length)];
+  console.log(answer)
+}
+
+
+
+
+        
+  var alpha = "abcdefghijklmnopqrstuvwxyz";
+  var a = alpha.split("");
+ for( let i =0; i <a.length ; i++){
+      var letter = document.createElement("button");
+      letter.setAttribute("id",i)
+      letter.addEventListener("click",handleGuess)
+      letter.value = a[i];
+      letter.innerHTML= a[i];
+      document.body.appendChild(letter)
+      
+      
+}  
+    var hint = document.createElement("div")
+      hint.setAttribute("id","hint");
+      hint.innerHTML=" HINT:It is a Programming Language"
+      document.body.appendChild(hint);
+
+    var result = document.createElement("div")
+      result.setAttribute("id","result");
+      document.body.appendChild(result);
+
+     var lose = document.createElement("div")
+      lose.setAttribute("id","lose");
+      document.body.appendChild(lose);
+
+    var div1 = document.createElement("div")
+      div1.setAttribute("id","text");
+      document.body.appendChild(div1);
+
+      document.body.appendChild(document.createElement("br"));
+
+      var wrong = document.createElement("div")
+      wrong.setAttribute("id","wrong");
+      document.body.appendChild(wrong);
+      wrong.innerHTML="maxWrong = " +maxWrong;
+
+
+      var mistakes2 = document.createElement("div")
+      mistakes2.setAttribute("id","mistakes2");
+      document.body.appendChild(mistakes2);
+ function updateMistakes() {
+      
+      mistakes2.innerHTML="Wrong " +mistakes;
+      
+         
+      }
+
+      function checkIfGameLost() {
+  if (mistakes === maxWrong) {
+    result.innerHTML = 'The answer was: ' + answer;
+    lose.innerHTML = 'You Lost!!!';
+  }
+}
+
+function checkIfGameWon() {
+  if (wordStatus === answer) {
+    lose.innerHTML = 'You Won!!!';
+  }
+}
+
+function reresult(){
+    lose.innerHTML="";
+    result.innerHTML="";
+}
+
+
+
+      
+
+      var image = document.createElement("img")
+      image.setAttribute("id","img");
+      image.setAttribute("src","./0.jpg","style");
+      image.setAttribute("style","width:300px");
+      document.body.appendChild(image);
+
+document.body.appendChild(document.createElement("br"));
+
+
+var resetx = document.createElement("button")
+      resetx.setAttribute("id","reset");
+      resetx.addEventListener("click",reset);
+      resetx.innerHTML="RESET"
+      document.body.appendChild(resetx);
+
+      function updateHangmanPicture() {
+  image.src = './'+ mistakes + '.jpg';
+}
+
+
+function reset() {
+  mistakes = 0;
+  guessed = [];
+  image.src = './0.jpg';
+
+  randomWord();
+  guessedWord();
+  updateMistakes();
+  reresult()
+  
+}
+      
+        
+function handleGuess(chosenLetter){ 
+      guessed.push(this.value)
+    
+      console.log("index " +guessed.indexOf(this.value))
+      console.log("guessed " +guessed);
+      console.log("a " +answer.indexOf(this.value))
+      if (answer.indexOf(this.value) >= 0) {
+    guessedWord();
+    checkIfGameWon();
+    
+  } 
+
+  else if (answer.indexOf(chosenLetter) === -1) {
+    mistakes++;
+    updateMistakes();
+    checkIfGameLost();
+    updateHangmanPicture();
+  }
+      }
+
+//       function updateMistakes() {
+//     //   mistakes.innerHTML = mistakes;
+// }
+
+      function guessedWord() {
+      wordStatus = answer.split('').map(letter => (guessed.indexOf(letter) >= 0 ? letter : " _ ")).join('');
+      div1.innerHTML = wordStatus;
+      console.log(wordStatus)
+    //   console.log("gg " +guessed.indexOf(letter))
+}
+
+
+
+randomWord();
+guessedWord();
+
+    </script>
+</body>
+</html>
